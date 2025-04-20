@@ -1,0 +1,21 @@
+@startuml uml2
+left to right direction
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #FDF6E3
+  BorderColor #586e75
+  ArrowColor #657b83
+  ActorBorderColor #657b83
+  ActorFontColor black
+}
+
+actor "Rendszer" as System
+
+System --> (Játékosok párosítása és sorrend sorsolása)
+System --> (Pontszámítás és nyertes megjelenítése)
+System --> (Kérdés megjelenítése)
+System --> (Válasz ellenőrzése)
+System --> (Térkép megjelenítése)
+System --> (Válaszeredmény visszajelzése)
+
+@enduml

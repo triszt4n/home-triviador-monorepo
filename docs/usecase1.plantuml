@@ -1,0 +1,20 @@
+@startuml uml1
+left to right direction
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #FDF6E3
+  BorderColor #586e75
+  ArrowColor #657b83
+  ActorBorderColor #657b83
+  ActorFontColor black
+}
+
+actor "Játékos" as Player
+
+Player --> (Csatlakozás játékhoz)
+Player --> (Szabad terület kiválasztása)
+Player --> (Kérdés megválaszolása területfoglaláskor)
+Player --> (Támadás indítása)
+Player --> (Kérdés megválaszolása támadáskor)
+
+@enduml
