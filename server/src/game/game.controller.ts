@@ -5,6 +5,11 @@ import { GameService } from "./game.service"
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
+  @Post("resetGame")
+  resetGame(@Body() createGameDto: { name: string }) {
+    return this.gameService.reset()
+  }
+
   @Post("userLogin")
   userLogin(@Body() createGameDto: { name: string }) {
     return this.gameService.userLogin(createGameDto.name)

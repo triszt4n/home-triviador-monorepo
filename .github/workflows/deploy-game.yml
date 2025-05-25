@@ -21,12 +21,12 @@ jobs:
         with:
           lfs: true
 
-      - name: Cache Library
-        uses: actions/cache@v2
-        with:
-          path: Library
-          key: Library-${{ github.sha }}
-          restore-keys: Library-
+      # - name: Cache Library
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: Library
+      #     key: Library-${{ github.sha }}
+      #     restore-keys: Library-
 
       - name: Build project
         uses: game-ci/unity-builder@v2

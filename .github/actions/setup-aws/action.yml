@@ -10,4 +10,4 @@ runs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: eu-central-1
-        role-to-assume: arn:aws:iam::339713096573:role/github-oidc-pipeline
+        role-to-assume: arn:aws:iam::185226996869:role/github-oidc-pipeline
