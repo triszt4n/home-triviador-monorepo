@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model Player {
+  id     String @id @default(cuid())
+  name   String
+  number Int
+
+  sessionId String
+  session   Session @relation(fields: [sessionId], references: [id])
+
+  towerHealth     Int   @default(3)
+  towerPlace      Int   @default(0)
+  conqueredPlaces Int[] @default([])
+  points          Int   @default(1000)
+}
+
+model Session {
+  id String @id @default(cuid())
+
+  state ProcessState @default(UNSTARTED)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  players Player[]
+}
+
+enum ProcessState {
+  UNSTARTED
+  STARTED
+  FINISHED
+}
+
+model TipGame {
+  id       String @id @default(cuid())
+  question String
+  tip      Int
+}
+
+model ChoiceGame {
+  id       String   @id @default(cuid())
+  question String
+  choices  String[]
+  answer   Int
+}

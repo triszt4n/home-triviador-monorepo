@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "server"
+		},
+		{
+			"path": "server-infra"
+		},
+		{
+			"path": ".github"
+		},
+		{
+			"path": "HomeTriviador"
+		}
+	],
+	"settings": {}
+}

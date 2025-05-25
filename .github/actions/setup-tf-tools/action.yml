@@ -1,0 +1,18 @@
+name: Setup Terragrunt
+
+permissions:
+  id-token: write
+
+runs:
+  using: composite
+  steps:
+    - name: Setup terraform and terragrunt
+      uses: cds-snc/terraform-tools-setup@v1
+      env:
+        TERRAFORM_VERSION: 1.7.5
+        TERRAGRUNT_VERSION: 0.62.3
+
+    - name: Setup tf-summarize newer
+      uses: kishaningithub/setup-tf-summarize@v2
+      with:
+        tf-summarize-version: v0.3.10

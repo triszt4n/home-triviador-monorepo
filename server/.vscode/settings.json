@@ -1,0 +1,18 @@
+{
+  "search.exclude": {
+    "public/**": true,
+    "node_modules/**": true,
+    "dist/**": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "prettier.requireConfig": true,
+  "prettier.prettierPath": "./node_modules/prettier"
+}

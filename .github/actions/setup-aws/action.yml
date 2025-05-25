@@ -1,0 +1,13 @@
+name: Setup AWS
+
+permissions:
+  id-token: write
+
+runs:
+  using: composite
+  steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: eu-central-1
+        role-to-assume: arn:aws:iam::339713096573:role/github-oidc-pipeline
