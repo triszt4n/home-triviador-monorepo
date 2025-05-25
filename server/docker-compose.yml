@@ -4,9 +4,9 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - streamzen-postgres:/var/lib/postgresql/data
+      - trvi-postgres:/var/lib/postgresql/data
     env_file:
       - .env
 
 volumes:
-  streamzen-postgres:
+  trvi-postgres:

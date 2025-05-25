@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HU_Tolna_0: 3836043356406820659
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

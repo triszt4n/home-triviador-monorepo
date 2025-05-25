@@ -14,7 +14,7 @@ public class GameHandler : MonoBehaviour
     {
         var images = gameObject.GetComponentsInChildren<Image>();
         countyImages = images.Where(image => image.name.Contains("County")).ToList();
-        startingColor.a = 1;
+        startingColor.a = 0.1f;
         foreach (var image in countyImages)
         {
             image.color = startingColor;
@@ -25,9 +25,6 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (var image in countyImages)
-        {
-            image.color = startingColor;
-        }
+        
     }
 }

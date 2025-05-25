@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HU_Somogy_0: 4012300784216535001
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
