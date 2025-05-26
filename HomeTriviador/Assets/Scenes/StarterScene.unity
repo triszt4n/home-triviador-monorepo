@@ -1031,6 +1031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterButton: {fileID: 1613155465}
   resetButton: {fileID: 142574721}
+  nameInputField: {fileID: 191629067}
 --- !u!1 &1010417977
 GameObject:
   m_ObjectHideFlags: 0

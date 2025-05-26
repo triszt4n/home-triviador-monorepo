@@ -13,6 +13,7 @@ COPY .yarnrc.yml ./
 COPY prisma ./prisma/
 
 # Install the project dependencies using Yarn
+RUN apk add --no-cache openssl
 RUN corepack enable
 RUN yarn install
 
@@ -38,6 +39,7 @@ COPY --from=build /app/.yarnrc.yml ./.yarnrc.yml
 COPY --from=build /app/prisma ./prisma
 
 # Install only production dependencies
+RUN apk add --no-cache openssl
 RUN corepack enable
 RUN yarn install --immutable
 RUN npx prisma generate

@@ -128,7 +128,7 @@ module "api" {
   api_subnet_route_table_ids = [for s in values(module.vpc.subnets) : s.route_table_id]
 
   ecs = {
-    dummy_image_tag = "dummy-image-tag:2"
+    dummy_image_tag = "dummy-image-tag:5"
     family_name     = "api"
     port_mapping    = 80
     task_environment = {

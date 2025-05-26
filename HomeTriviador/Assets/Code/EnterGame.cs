@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ public class EnterGame : MonoBehaviour
 {
     public Button enterButton;
     public Button resetButton;
+    public TMP_InputField nameInputField;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,7 +28,7 @@ public class EnterGame : MonoBehaviour
     void OnResetButtonClick()
     {
         // Reset the game state or reload the current scene
-        
+        Debug.Log(nameInputField.text);
     }
 
     // Update is called once per frame
