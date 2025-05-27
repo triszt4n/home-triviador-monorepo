@@ -8,9 +8,8 @@ datasource db {
 }
 
 model User {
-  id     String @id @default(cuid())
-  name   String
-  number Int
+  id   String @id @default(cuid())
+  name String
 
   sessionId String
   session   Session @relation(fields: [sessionId], references: [id])
@@ -24,7 +23,10 @@ model User {
 model Session {
   id String @id @default(cuid())
 
-  state ProcessState @default(UNSTARTED)
+  state           ProcessState @default(UNSTARTED)
+  usedTipGames    TipGame[]
+  usedChoiceGames ChoiceGame[]
+  phase           Int          @default(0) // 0-6: tip0-6, 7-18: choice0-11
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -42,6 +44,8 @@ model TipGame {
   id       String @id @default(cuid())
   question String
   tip      Int
+
+  session Session[]
 }
 
 model ChoiceGame {
@@ -49,4 +53,6 @@ model ChoiceGame {
   question String
   choices  String[]
   answer   Int
+
+  session Session[]
 }
