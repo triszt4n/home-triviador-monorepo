@@ -9,8 +9,6 @@ namespace Code
         public string id;
         public string name;
         public int points;
-        public int towerPlace;
-        public int towerHealth;
         public int[] conqueredPlaces;
     }
     

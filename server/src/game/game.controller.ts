@@ -10,7 +10,14 @@ export class GameController {
 
   @Get()
   async get() {
+    this.logger.debug("Got session")
     return this.gameService.getSession()
+  }
+
+  @Get("status")
+  async getStatus() {
+    this.logger.debug("Got status")
+    return this.gameService.getStatus()
   }
 
   @Post("reset")

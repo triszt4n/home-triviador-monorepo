@@ -14,8 +14,8 @@ model User {
   sessionId String
   session   Session @relation(fields: [sessionId], references: [id])
 
-  towerHealth     Int   @default(3)
-  towerPlace      Int   @default(0)
+  // towerHealth     Int   @default(3)
+  // towerPlace      Int   @default(0)
   conqueredPlaces Int[] @default([])
   points          Int   @default(1000)
 }
