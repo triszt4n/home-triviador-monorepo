@@ -18,15 +18,19 @@ model User {
   // towerPlace      Int   @default(0)
   conqueredPlaces Int[] @default([])
   points          Int   @default(1000)
+
+  Incoming Incoming[]
 }
 
 model Session {
   id String @id @default(cuid())
 
-  state           ProcessState @default(UNSTARTED)
-  usedTipGames    TipGame[]
-  usedChoiceGames ChoiceGame[]
-  phase           Int          @default(0) // 0-6: tip0-6, 7-18: choice0-11
+  state               ProcessState @default(UNSTARTED)
+  phase               Int          @default(0) // 0-6: tip0-6, 7-18: choice0-11
+  currentTipGame      TipGame?     @relation(fields: [currentTipGameId], references: [id])
+  currentTipGameId    String?
+  currentChoiceGame   ChoiceGame?  @relation(fields: [currentChoiceGameId], references: [id])
+  currentChoiceGameId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -41,18 +45,34 @@ enum ProcessState {
 }
 
 model TipGame {
-  id       String @id @default(cuid())
-  question String
-  tip      Int
-
-  session Session[]
+  id           String     @id @default(cuid())
+  question     String
+  tip          Int
+  incomingTips Incoming[]
+  used         Boolean    @default(false)
+  session      Session[]
 }
 
 model ChoiceGame {
-  id       String   @id @default(cuid())
-  question String
-  choices  String[]
-  answer   Int
+  id              String     @id @default(cuid())
+  question        String
+  choices         String[]
+  answer          Int
+  incomingAnswers Incoming[]
+  used            Boolean    @default(false)
+  session         Session[]
+}
 
-  session Session[]
+model Incoming {
+  id       String @id @default(cuid())
+  playerId String
+  player   User   @relation(fields: [playerId], references: [id])
+  tip      Int
+
+  ChoiceGame   ChoiceGame? @relation(fields: [ChoiceGameid], references: [id])
+  ChoiceGameid String?
+  TipGame      TipGame?    @relation(fields: [TipGameid], references: [id])
+  TipGameid    String?
+
+  createdAt DateTime @default(now())
 }

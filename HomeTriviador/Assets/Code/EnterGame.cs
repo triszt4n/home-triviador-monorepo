@@ -68,7 +68,12 @@ namespace Code
             {
                 Debug.LogError("Enter failed: " + request.error);
             }
-            UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+            else
+            {
+                PlayerPrefs.SetString("playerName", nameInputField.text);
+                PlayerPrefs.Save();
+                UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+            }
         }
 
         // Update is called once per frame

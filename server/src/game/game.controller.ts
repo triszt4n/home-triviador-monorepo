@@ -33,4 +33,28 @@ export class GameController {
     this.logger.debug(`User logged in: ${createGameDto.name} in session: ${res.sessionId}`)
     return res
   }
+
+  @Get("nextTip")
+  async getNextTip() {
+    this.logger.debug("GET next tip")
+    return this.gameService.getNextTip()
+  }
+
+  @Get("currentTip")
+  async getResults() {
+    this.logger.debug("GET tip results")
+    return this.gameService.getResults()
+  }
+
+  @Post("tip")
+  async postTip(@Body() { id, name, tip }: { id: string; name: string; tip: number }) {
+    this.logger.debug("POST tip")
+    return this.gameService.postTip(name, tip, id)
+  }
+
+  @Post("conquer")
+  async conquer(@Body() { name, countyIndex }: { name: string; countyIndex: number }) {
+    this.logger.debug("POST conquer")
+    return this.gameService.conquer(name, countyIndex)
+  }
 }

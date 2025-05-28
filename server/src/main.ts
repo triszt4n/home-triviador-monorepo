@@ -35,6 +35,7 @@ async function bootstrap() {
   }
 
   app.enableShutdownHooks()
+  app.enableCors()
 
   const port = configService.get<number>("PORT")
   await app.listen(port, () => {

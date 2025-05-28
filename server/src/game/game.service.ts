@@ -125,6 +125,7 @@ export class GameService {
         sessionId: session.id,
       },
     })
+    await this.prisma.incoming.deleteMany()
     return this.prisma.session.update({
       where: {
         id: session.id,
@@ -134,6 +135,158 @@ export class GameService {
         players: {
           set: [],
         },
+      },
+    })
+  }
+
+  async getNextTip() {
+    const session = await this.prisma.session.findFirst({
+      include: { currentTipGame: true },
+    })
+    if (session.currentTipGame) return session.currentTipGame
+
+    const tipGame = await this.prisma.tipGame.findFirst({
+      where: {
+        used: false,
+      },
+    })
+    if (!tipGame) {
+      throw new Error("No available tip game found")
+    }
+    await this.prisma.tipGame.update({
+      where: {
+        id: tipGame.id,
+      },
+      data: {
+        used: true,
+      },
+    })
+    await this.prisma.session.update({
+      where: {
+        id: session.id,
+      },
+      data: {
+        currentTipGame: {
+          connect: {
+            id: tipGame.id,
+          },
+        },
+      },
+    })
+    return tipGame
+  }
+
+  async postTip(name: string, tip: number, tipGameId: string) {
+    const session = await this.prisma.session.findFirst({
+      include: {
+        players: true,
+      },
+    })
+    const player = session.players.find((player) => player.name === name)
+    if (!player) {
+      throw new Error("Player not found")
+    }
+    const tipGame = await this.prisma.tipGame.findFirst({
+      where: {
+        id: tipGameId,
+      },
+    })
+    if (!tipGame) {
+      throw new Error("Tip game not found")
+    }
+    return this.prisma.tipGame.update({
+      where: {
+        id: tipGame.id,
+      },
+      data: {
+        incomingTips: {
+          create: {
+            playerId: player.id,
+            tip,
+          },
+        },
+      },
+    })
+  }
+
+  async getResults() {
+    const session = await this.prisma.session.findFirst({
+      include: {
+        currentTipGame: {
+          include: {
+            incomingTips: {
+              include: {
+                player: true,
+              },
+            },
+          },
+        },
+      },
+    })
+    const tipGame = session.currentTipGame
+    if (!tipGame) {
+      throw new Error("Tip game not found")
+    }
+
+    // winner is the closest to the tip and fastest
+    if (tipGame.incomingTips.length === 3) {
+      const sortedTips = tipGame.incomingTips.sort((a, b) => {
+        const diffA = Math.abs(tipGame.tip - a.tip)
+        const diffB = Math.abs(tipGame.tip - b.tip)
+        if (diffA === diffB) {
+          return a.createdAt.getTime() - b.createdAt.getTime()
+        }
+        return diffA - diffB
+      })
+      const incomingTips = sortedTips.map((tip, index) => ({
+        name: tip.player.name,
+        tip: tip.tip,
+        ranking: index,
+      }))
+      await this.prisma.session.update({
+        where: {
+          id: session.id,
+        },
+        data: {
+          currentTipGame: {
+            disconnect: true,
+          },
+        },
+      })
+      return {
+        incomingTips: incomingTips,
+        winningTip: tipGame.tip,
+      }
+    }
+
+    return {
+      incomingTips: [],
+      winningTip: tipGame.tip,
+    }
+  }
+
+  async conquer(name: string, place: number) {
+    const session = await this.prisma.session.findFirst({
+      include: {
+        players: true,
+      },
+    })
+    if (!session) {
+      throw new Error("Session not found")
+    }
+    const player = session.players.find((player) => player.name === name)
+    if (!player) {
+      throw new Error("Player not found")
+    }
+    if (player.conqueredPlaces.includes(place)) {
+      return
+    }
+    return this.prisma.user.update({
+      where: {
+        id: player.id,
+      },
+      data: {
+        conqueredPlaces: [...player.conqueredPlaces, place],
       },
     })
   }
